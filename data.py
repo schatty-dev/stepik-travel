@@ -1,8 +1,6 @@
 title = "Stepik Travel"
-subtitle = "Для тех, кого отвлекают дома"
-description = "Лучшие направления, где никто не будет вам мешать сидеть на берегу и изучать программирование, дизайн, разработку игр и управление продуктами"
-departures = {"msk": "Из Москвы", "spb": "Из Петербурга", "nsk": "Из Новосибирска", "ekb": "Из Екатеринбурга",
-              "kazan": "Из Казани"}
+subtitle = "For those who is sick from the homeland"
+description = "The best options with no distractions from your work, hobbies and meditation."
 
 tours = {
     1: {

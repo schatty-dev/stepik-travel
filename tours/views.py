@@ -1,8 +1,33 @@
 import random
 from django.shortcuts import render
-from django.views.generic import DetailView
 
-from data import tours
+from data import tours, title, subtitle, description
+
+DEP_NAMES = ["St. Petersburg",
+             "Moscow",
+             "Kazan",
+             "Novosibirsk",
+             "Ekaterinburg",]
+
+DEP_PAGE = "departure"
+DEP_CODES = ["spb",
+             "msk",
+             "kazan",
+             "nsk",
+             "ekb"]
+
+
+def get_base_context():
+    context = {
+        "title": title,
+        "header": [{"name": k, "link": f"/{DEP_PAGE}/{v}/"} for k, v in zip(DEP_NAMES, DEP_CODES)]
+    }
+    return context
+
+
+def get_dep_name(dep_code):
+    return DEP_NAMES[DEP_CODES.index(dep_code)]
+
 
 def get_random_ids(n=6, total=17,  start_from=1):
     inds = list(range(start_from, total))
@@ -16,7 +41,10 @@ def get_ids_by_departure(departure):
 
 
 def main_view(request):
-    context_data = {}
+    context_data = get_base_context()
+    context_data["subtitle"] = subtitle
+    context_data["description"] = description
+
     for i, tour_id in enumerate(get_random_ids()):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_id]["title"],
@@ -28,9 +56,9 @@ def main_view(request):
 
 
 def departure_view(request, departure):
-    ids = get_ids_by_departure(departure)
+    context_data = get_base_context()
 
-    context_data = {}
+    ids = get_ids_by_departure(departure)
     for i, tour_id in enumerate(ids[:3]):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_id]["title"],
@@ -38,8 +66,8 @@ def departure_view(request, departure):
                 "description": tours[tour_id]["description"][:80] + "...",
                 "link": f"/tour/{tour_id}/",
             }
-    context_data["departure"] = departure
- 
+    context_data["departure"] = get_dep_name(departure)
+
     context_data["tours"] = []
     for id in ids:
         tour_data = tours[id]
@@ -58,11 +86,15 @@ def departure_view(request, departure):
 
 
 def tour_view(request, id):
-    context = tours.get(id)
-    context["stars_str"] = "★" * int(context["stars"])
-    if not context:
+    context_data = get_base_context()
+
+    tour_data = tours.get(id)
+    if not tour_data:
         return render(request, '404.html', status=400)
-    return render(request, "tours/tour.html", context=context)
+
+    context_data = {**context_data, **tour_data}
+    context_data["stars_str"] = "★" * int(context_data["stars"])
+    return render(request, "tours/tour.html", context=context_data)
 
 
 def handler404(request, exception):
