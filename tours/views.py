@@ -1,4 +1,5 @@
 import random
+from django.http import Http404
 from django.shortcuts import render
 
 from data import tours, title, subtitle, description
@@ -90,18 +91,10 @@ def tour_view(request, id):
 
     tour_data = tours.get(id)
     if not tour_data:
-        return render(request, '404.html', status=400)
+        raise Http404("404: Tour doesn't exist")
+        # return render(request, '404.html', status=400)
 
     context_data = {**context_data, **tour_data}
     context_data["stars_str"] = "★" * int(context_data["stars"])
     return render(request, "tours/tour.html", context=context_data)
 
-
-def handler404(request, exception):
-    response = render(request, '404.html', status=400)
-    return response
-
-
-def handler500(request):
-    response = render(request, '500.html', status=500)
-    return response
