@@ -20,7 +20,7 @@ DEP_CODES = ["spb",
 
 def get_base_context():
     context = {
-        "title": title,
+        "website_title": title,
         "header": [{"name": k, "link": f"/{DEP_PAGE}/{v}/"} for k, v in zip(DEP_NAMES, DEP_CODES)]
     }
     return context
