@@ -1,0 +1,24 @@
+{
+  "0": {
+    "tour_id": 0,
+    "name": "Seoul",
+    "stars": "★★★",
+    "desc": "Half-Day Korean DMZ Tour from Seoul",
+    "text": "Travelers that want to uncover the history of the Korean War may be disappointed to learn that independent travelers can't visit the demilitarized zone (DMZ) between North and South Korea. But with this guided tour, you can explore this storied area on the Korean border. Highlights include stops at the 3rd Tunnel and DMZ Exhibition Hall, views of the Freedom Bridge, and your guide's commentary on the history of the Korean War.",
+    "image_url": "https://user-images.githubusercontent.com/74490964/99187045-5d929600-2765-11eb-8ee4-4aa49dd481cb.jpg"
+  },
+  "1": {
+    "name": "Berlin",
+    "stars": "★★★★",
+    "desc": "A cosmopolitan city with an edge",
+    "text": "From its fashion to its architecture to its political history, Berlin has always been edgy. The Berlin Wall is a sobering reminder of the hyper-charged postwar atmosphere, and yet the graffiti art that now covers its remnants has become symbolic of social progress. Check out the Weltzeituhr (world time) Clock, topped by a model of the solar system, then turn back time by dining at the historic Zur Letzten Instanz, a 16th century restaurant that was frequented by Napoleon and Beethoven.",
+    "image_url": "https://user-images.githubusercontent.com/74490964/99187830-eca1ad00-2769-11eb-8dd2-a69bf1313916.jpg"
+  },
+  "2": {
+    "name": "Honk-Kong",
+    "stars": "★★★★",
+    "desc": "A vibrant harbor city with an unbeatable food scene",
+    "text": "Delectable dim sum, floating islands, and a one-of-a-kind skyline are just some of Hong Kong’s enchanting features. Eat your way across Temple Street Night Market with its fish balls and stinky tofu, or settle in for dim sum at Michelin-starred venues like Tim Ho Wan. For traditional Chinese architecture, head to Ngong Ping Village, then take the tram to the tippity-top of Victoria Peak for skyscraper views. The gentle hills of Nan Lian Garden will deliver serenity, but a detour through the city’s cocktail bars will bring back Hong Kong’s urban buzz.",
+    "image_url": "https://user-images.githubusercontent.com/74490964/99187866-1955c480-276a-11eb-85e0-b00e5d93f407.jpg"
+  }
+}
