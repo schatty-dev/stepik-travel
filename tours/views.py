@@ -4,15 +4,20 @@ from django.views.generic import DetailView
 
 from data import tours
 
-def get_random_inds(n=6, total=17,  start_from=1):
+def get_random_ids(n=6, total=17,  start_from=1):
     inds = list(range(start_from, total))
     random.shuffle(inds)
     return inds[:6]
 
 
+def get_ids_by_departure(departure):
+    """ Return tour ids filtered by given departure. """
+    return [k for k, v in tours.items() if v["departure"] == departure]
+
+
 def main_view(request):
     context_data = {}
-    for i, tour_i in enumerate(get_random_inds()):
+    for i, tour_i in enumerate(get_random_ids()):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_i]["title"],
                 "link": tours[tour_i]["picture"],
@@ -22,8 +27,10 @@ def main_view(request):
 
 
 def departure_view(request, departure):
+    ids = get_ids_by_departure(departure)
+
     context_data = {}
-    for i, tour_i in enumerate(get_random_inds(n=3)):
+    for i, tour_i in enumerate(ids[:3]):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_i]["title"],
                 "link": tours[tour_i]["picture"],
@@ -32,11 +39,11 @@ def departure_view(request, departure):
     context_data["departure"] = departure
  
     context_data["tours"] = []
-    for id, tour in tours.items():
-        if tour["departure"] == departure:
-            context_data["tours"].append(tour)
-            context_data["tours"][-1]["stars_str"] = "★" * int(tour["stars"])
-            context_data["tours"][-1]["link"] = f"/tour/{id}/"
+    for id in ids:
+        tour_data = tours[id]
+        context_data["tours"].append(tour_data)
+        context_data["tours"][-1]["stars_str"] = "★" * int(tour_data["stars"])
+        context_data["tours"][-1]["link"] = f"/tour/{id}/"
 
     # General info
     context_data["num_tours"] = len(context_data["tours"])
