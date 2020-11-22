@@ -218,8 +218,8 @@ tours = {
                 сторон. Второй этаж меньше первого, что позволило создать несколько балконов по бокам дома. Этот \
                 этаж следует тому же стилю, что и этаж ниже.",
         "departure": "spb",
-        "picture": "https://images.unsplash.com/photo-1568084680786-a84f91d1153c\
-                ?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+        "picture": "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?ixlib\
+                =rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
         "price": 82000,
         "stars": "4",
         "country": "Доминикана",
