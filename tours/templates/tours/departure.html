@@ -30,70 +30,72 @@
   </header>
   <main class="container mt-3">
     <h1 class="display-5 mt-4">Flights from {{ departure }}</h1>
-    <p class="mb-4">Found 15 tours, $ 3k..20k, from 4 to 15 days</p>
+    <h5 class="mb-4" style="color:gray;">Found {{ num_tours }} tours, $ {{ min_price }}..{{ max_price }}, from {{ min_days }} to {{ max_days }} days</h5>
+    <h3>Top picks</h3>
     <!-- CARDS -->
-    <div class="row mt-5">
+    <div class="row mt-2">
       <div class="col-4">
         <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
+          <div class="embed-responsive embed-responsive-16by9">
+          <img src="{{ preview_1.link }}/300x200" class="card-img-top embed-responsive-item" alt="">
+          </div>
           <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h2 class="h5 card-title">{{ preview_1.title }}</h2>
+            <p class="card-text">{{ preview_1.description }}</p>
             <a href="#" class="btn btn-sm btn-primary">Details</a>
           </div>
         </div>
       </div>
       <div class="col-4">
         <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
+          <div class="embed-responsive embed-responsive-16by9">
+          <img src="{{ preview_2.link }}/300x200" class="card-img-top embed-responsive-item" alt="">
+          </div>
           <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-sm btn-primary">Detals</a>
+            <h2 class="h5 card-title">{{ preview_2.title }}</h2>
+            <p class="card-text">{{ preview_2.description }}</p>
+            <a href="#" class="btn btn-sm btn-primary">Details</a>
           </div>
         </div>
       </div>
       <div class="col-4">
         <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
-          <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-sm btn-primary">Detals</a>
+          <div class="embed-responsive embed-responsive-16by9">
+          <img src="{{ preview_3.link }}/300x200" class="card-img-top embed-responsive-item" alt="">
           </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
           <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-sm btn-primary">Detals</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
-          <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-sm btn-primary">Detals</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="card mb-4">
-          <img src="https://place-hold.it/300x200" class="card-img-top img-fluid" alt="">
-          <div class="card-body">
-            <h2 class="h5 card-title">Hotel title</h2>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-sm btn-primary">Detals</a>
+            <h2 class="h5 card-title">{{ preview_3.title }}</h2>
+            <p class="card-text">{{ preview_3.description }}</p>
+            <a href="#" class="btn btn-sm btn-primary">Details</a>
           </div>
         </div>
       </div>
     </div>
+    <div class="my-3">
+    <h3>Tours</h3>
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Country</th>
+        <th>$</th>
+        <th>Nights</th>
+        <th>Rating</th>
+        <th>Link</th>
+      </tr>
+      </thead>
+      {% for tour in tours %}
+      <tr>
+        <td>{{ tour.title }}</td>
+        <td>{{ tour.country }}</td>
+        <td>{{ tour.price }}</td>
+        <td>{{ tour.nights }}</td>
+        <td>{{ tour.stars_str }}</td>
+        <td><a href="{{ tour.link }}">open</a></td>
+      </tr>
+      {% endfor %}
+    </table>
   </main>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

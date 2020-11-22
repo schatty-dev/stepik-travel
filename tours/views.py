@@ -1,14 +1,18 @@
 import random
 from django.shortcuts import render
+from django.views.generic import DetailView
 
 from data import tours
+
+def get_random_inds(n=6, total=17,  start_from=1):
+    inds = list(range(start_from, total))
+    random.shuffle(inds)
+    return inds[:6]
 
 
 def main_view(request):
     context_data = {}
-    inds = list(range(1, 17))
-    random.shuffle(inds)
-    for i, tour_i in enumerate(inds[:6]):
+    for i, tour_i in enumerate(get_random_inds()):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_i]["title"],
                 "link": tours[tour_i]["picture"],
@@ -18,7 +22,30 @@ def main_view(request):
 
 
 def departure_view(request, departure):
-    return render(request, "tours/departure.html", context={"departure": departure})
+    context_data = {}
+    for i, tour_i in enumerate(get_random_inds(n=3)):
+        context_data[f"preview_{i+1}"] = {
+                "title": tours[tour_i]["title"],
+                "link": tours[tour_i]["picture"],
+                "description": tours[tour_i]["description"][:80] + "...",
+            }
+    context_data["departure"] = departure
+ 
+    context_data["tours"] = []
+    for id, tour in tours.items():
+        if tour["departure"] == departure:
+            context_data["tours"].append(tour)
+            context_data["tours"][-1]["stars_str"] = "★" * int(tour["stars"])
+            context_data["tours"][-1]["link"] = f"/tour/{id}/"
+
+    # General info
+    context_data["num_tours"] = len(context_data["tours"])
+    context_data["min_price"] = min([tour["price"] for tour in context_data["tours"]])
+    context_data["max_price"] = max([tour["price"] for tour in context_data["tours"]])
+    context_data["min_days"] = min([tour["nights"] for tour in context_data["tours"]])
+    context_data["max_days"] = max([tour["nights"] for tour in context_data["tours"]])
+
+    return render(request, "tours/departure.html", context=context_data)
 
 
 def tour_view(request, id):
