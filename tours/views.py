@@ -1,14 +1,16 @@
 import random
+
 from django.http import Http404
 from django.shortcuts import render
 
 from data import tours, title, subtitle, description
 
+
 DEP_NAMES = ["St. Petersburg",
              "Moscow",
              "Kazan",
              "Novosibirsk",
-             "Ekaterinburg",]
+             "Ekaterinburg"]
 
 DEP_PAGE = "departure"
 DEP_CODES = ["spb",
@@ -17,8 +19,12 @@ DEP_CODES = ["spb",
              "nsk",
              "ekb"]
 
+# Max number of symbols for the preview cards
+MAX_PREV_SYMBS = 80
+
 
 def get_base_context():
+    """ Return context necessary for all pages. """
     context = {
         "website_title": title,
         "header": [{"name": k, "link": f"/{DEP_PAGE}/{v}/"} for k, v in zip(DEP_NAMES, DEP_CODES)]
@@ -27,10 +33,12 @@ def get_base_context():
 
 
 def get_dep_name(dep_code):
+    """ Get full departure name from its code. """
     return DEP_NAMES[DEP_CODES.index(dep_code)]
 
 
 def get_random_ids(n=6, total=17,  start_from=1):
+    """ Return random ids between given range. """
     inds = list(range(start_from, total))
     random.shuffle(inds)
     return inds[:6]
@@ -42,10 +50,13 @@ def get_ids_by_departure(departure):
 
 
 def main_view(request):
+    """ View for the root page. """
+
     context_data = get_base_context()
     context_data["subtitle"] = subtitle
     context_data["description"] = description
 
+    # Parsing data for preview cards
     for i, tour_id in enumerate(get_random_ids()):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_id]["title"],
@@ -57,18 +68,24 @@ def main_view(request):
 
 
 def departure_view(request, departure):
-    context_data = get_base_context()
+    """ View for the Departure page. """
 
+    context_data = get_base_context()
     ids = get_ids_by_departure(departure)
+
+    # Data for "hot picks" preview cards
     for i, tour_id in enumerate(ids[:3]):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_id]["title"],
                 "img_link": tours[tour_id]["picture"],
-                "description": tours[tour_id]["description"][:80] + "...",
+                "description": tours[tour_id]["description"][:MAX_PREV_SYMBS] + "...",
                 "link": f"/tour/{tour_id}/",
             }
+
+    # Full departure name
     context_data["departure"] = get_dep_name(departure)
 
+    # Data for tours table
     context_data["tours"] = []
     for id in ids:
         tour_data = tours[id]
@@ -76,7 +93,7 @@ def departure_view(request, departure):
         context_data["tours"][-1]["stars_str"] = "★" * int(tour_data["stars"])
         context_data["tours"][-1]["link"] = f"/tour/{id}/"
 
-    # General info
+    # Small stats
     context_data["num_tours"] = len(context_data["tours"])
     context_data["min_price"] = min([tour["price"] for tour in context_data["tours"]])
     context_data["max_price"] = max([tour["price"] for tour in context_data["tours"]])
@@ -87,14 +104,13 @@ def departure_view(request, departure):
 
 
 def tour_view(request, id):
+    """View for the specific tour page. """
     context_data = get_base_context()
 
     tour_data = tours.get(id)
     if not tour_data:
         raise Http404("404: Tour doesn't exist")
-        # return render(request, '404.html', status=400)
 
     context_data = {**context_data, **tour_data}
     context_data["stars_str"] = "★" * int(context_data["stars"])
     return render(request, "tours/tour.html", context=context_data)
-
