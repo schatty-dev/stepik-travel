@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'kf_58$)l(uxps)_^0augcv9nw+bvz(x!%9mnh)f$766xp@d&q@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
+STATIC_ROOT = 'static'
 
 
 # Application definition
