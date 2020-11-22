@@ -1,8 +1,6 @@
-import json
 from django.shortcuts import render
 
-with open("data/tours.json", "r") as f:
-    TOUR_DATA = json.load(f)
+from data import tours
 
 
 def main_view(request):
@@ -14,7 +12,9 @@ def departure_view(request, departure):
 
 
 def tour_view(request, id):
-    context = TOUR_DATA.get(str(id))
+    context = tours.get(id)
+    print("context: ", context)
+    context["stars_str"] = "★" * int(context["stars"])
     if not context:
         return render(request, '404.html', status=400)
     return render(request, "tours/tour.html", context=context)
