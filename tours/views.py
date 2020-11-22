@@ -17,11 +17,12 @@ def get_ids_by_departure(departure):
 
 def main_view(request):
     context_data = {}
-    for i, tour_i in enumerate(get_random_ids()):
+    for i, tour_id in enumerate(get_random_ids()):
         context_data[f"preview_{i+1}"] = {
-                "title": tours[tour_i]["title"],
-                "link": tours[tour_i]["picture"],
-                "description": tours[tour_i]["description"][:80] + "...",
+                "title": tours[tour_id]["title"],
+                "img_link": tours[tour_id]["picture"],
+                "description": tours[tour_id]["description"][:80] + "...",
+                "link": f"/tour/{tour_id}/",
             }
     return render(request, "tours/index.html", context=context_data)
 
@@ -30,11 +31,12 @@ def departure_view(request, departure):
     ids = get_ids_by_departure(departure)
 
     context_data = {}
-    for i, tour_i in enumerate(ids[:3]):
+    for i, tour_id in enumerate(ids[:3]):
         context_data[f"preview_{i+1}"] = {
-                "title": tours[tour_i]["title"],
-                "link": tours[tour_i]["picture"],
-                "description": tours[tour_i]["description"][:80] + "...",
+                "title": tours[tour_id]["title"],
+                "img_link": tours[tour_id]["picture"],
+                "description": tours[tour_id]["description"][:80] + "...",
+                "link": f"/tour/{tour_id}/",
             }
     context_data["departure"] = departure
  
