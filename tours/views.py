@@ -33,7 +33,13 @@ def get_base_context():
 
 
 def get_dep_name(dep_code):
-    """ Get full departure name from its code. """
+    """ Get full departure name from its code.
+
+    Args:
+        dep_code (str): codename of departure.
+    """
+    if dep_code not in DEP_CODES:
+        return None
     return DEP_NAMES[DEP_CODES.index(dep_code)]
 
 
@@ -84,6 +90,8 @@ def departure_view(request, departure):
 
     # Full departure name
     context_data["departure"] = get_dep_name(departure)
+    if context_data["departure"] is None:
+        raise Http404("404: Departure page doesn't exist.")
 
     # Data for tours table
     context_data["tours"] = []
