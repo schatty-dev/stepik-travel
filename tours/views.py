@@ -43,11 +43,17 @@ def get_dep_name(dep_code):
     return DEP_NAMES[DEP_CODES.index(dep_code)]
 
 
-def get_random_ids(n=6, total=17,  start_from=1):
-    """ Return random ids between given range. """
-    inds = list(range(start_from, total))
+def get_random_ids(n=6, id_min=1, id_max=17):
+    """ Return random ids between given range.
+
+    Args:
+        n (int): total number of ids to return.
+        id_min (int): min id value.
+        id_max (int): min id value.
+    """
+    inds = list(range(id_min, id_max))
     random.shuffle(inds)
-    return inds[:6]
+    return inds[:n]
 
 
 def get_ids_by_departure(departure):
@@ -67,7 +73,7 @@ def main_view(request):
         context_data[f"preview_{i+1}"] = {
                 "title": tours[tour_id]["title"],
                 "img_link": tours[tour_id]["picture"],
-                "description": tours[tour_id]["description"][:80] + "...",
+                "description": tours[tour_id]["description"][:MAX_PREV_SYMBS] + "...",
                 "link": f"/tour/{tour_id}/",
             }
     return render(request, "tours/index.html", context=context_data)
